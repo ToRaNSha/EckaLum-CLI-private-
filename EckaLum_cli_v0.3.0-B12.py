@@ -29,13 +29,11 @@ import hmac
 import json
 import logging
 import math
-import os
 import random
-import sqlite3
 import sys
 import re
 from pathlib import Path
-from typing import List, Tuple
+from typing import List
 
 import click
 import numpy as np
@@ -62,7 +60,7 @@ GATE_MAP = {
     11: "Source return",
 }
 
-SOOTHING_REGEX = r"\\b(need|want|can(?:’|')t|okay|sorry|good job)\\b"
+SOOTHING_REGEX = r"\b(need|want|can(?:’|')t|okay|sorry|good job)\b"
 SELF_HARM_KEYWORDS = {"suicide", "kill myself", "self‑harm"}
 
 # log
@@ -156,7 +154,9 @@ def _phrase_allowed(root: Path, phrase: str) -> bool:
 
 
 @click.group()
-@click.option("--root", default=DEFAULT_ROOT, help="Data root directory", show_default=True)
+@click.option(
+    "--root", default=DEFAULT_ROOT, help="Data root directory", show_default=True
+)
 @click.version_option(TAG)
 @click.pass_context
 def cli(ctx: click.Context, root: str):
@@ -168,7 +168,13 @@ def cli(ctx: click.Context, root: str):
 
 
 @cli.command("scan")
-@click.option("--today", "today", is_flag=True, default=False, help="Run live field scan for today.")
+@click.option(
+    "--today",
+    "today",
+    is_flag=True,
+    default=False,
+    help="Run live field scan for today.",
+)
 @click.pass_obj
 def scan_cmd(obj, today):
     if today:
@@ -186,7 +192,9 @@ def scan_cmd(obj, today):
 
 
 @cli.command("forecast")
-@click.option("--week", "week", is_flag=True, default=False, help="7‑day energetic map.")
+@click.option(
+    "--week", "week", is_flag=True, default=False, help="7‑day energetic map."
+)
 @click.pass_obj
 def forecast_cmd(obj, week):
     if not week:
