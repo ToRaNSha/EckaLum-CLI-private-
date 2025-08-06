@@ -1,0 +1,3 @@
+- Run `pytest -q` before committing
+- Format with `ruff check <file> --fix` and `black <file>`
+- After pushes, run `python EckaLum_cli_v0.3.0-B12.py diagnose`
